@@ -4,6 +4,8 @@
 #include "MainWindow.g.cpp"
 #endif
 
+#include <algorithm>
+
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
 
@@ -20,5 +22,55 @@ namespace winrt::Dailies::implementation
     void MainWindow::MyProperty(int32_t /* value */)
     {
         throw hresult_not_implemented();
+    }
+
+    void MainWindow::Splitter_PointerPressed(
+        winrt::Windows::Foundation::IInspectable const& sender,
+        winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+    {
+        auto splitter = sender.as<winrt::Microsoft::UI::Xaml::UIElement>();
+        m_dragging = splitter.CapturePointer(e.Pointer());
+        m_dragVertical = (sender == VerticalSplitter());
+        auto point = e.GetCurrentPoint(nullptr).Position();
+        if (m_dragVertical)
+        {
+            m_start = point.X;
+            m_startSize = LeftCol().ActualWidth();
+        }
+        else
+        {
+            m_start = point.Y;
+            m_startSize = TopRow().ActualHeight();
+        }
+        e.Handled(true);
+    }
+
+    void MainWindow::Splitter_PointerMoved(
+        winrt::Windows::Foundation::IInspectable const&,
+        winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+    {
+        if (!m_dragging) return;
+        auto point = e.GetCurrentPoint(nullptr).Position();
+        if (m_dragVertical)
+        {
+            auto width = (std::max)(80.0, m_startSize + (point.X - m_start));
+            LeftCol().Width(winrt::Microsoft::UI::Xaml::GridLengthHelper::FromPixels(width));
+        }
+        else
+        {
+            auto height = (std::max)(80.0, m_startSize + (point.Y - m_start));
+            TopRow().Height(winrt::Microsoft::UI::Xaml::GridLengthHelper::FromPixels(height));
+        }
+        e.Handled(true);
+    }
+
+    void MainWindow::Splitter_PointerReleased(
+        winrt::Windows::Foundation::IInspectable const& sender,
+        winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e)
+    {
+        if (!m_dragging) return;
+        sender.as<winrt::Microsoft::UI::Xaml::UIElement>().ReleasePointerCapture(e.Pointer());
+        m_dragging = false;
+        e.Handled(true);
     }
 }

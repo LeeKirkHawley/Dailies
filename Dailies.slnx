@@ -4,7 +4,7 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Project Path="Dailies/Dailies.vcxproj">
+  <Project Path="Dailies/Dailies.vcxproj" Id="79842f4b-dede-4c77-a3d9-33888d2f8a2e">
     <Deploy />
   </Project>
 </Solution>

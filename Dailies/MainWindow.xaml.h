@@ -6,6 +6,18 @@ namespace winrt::Dailies::implementation
 {
     struct MainWindow : MainWindowT<MainWindow>
     {
+        void Splitter_PointerPressed(winrt::Windows::Foundation::IInspectable const& sender,
+            winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void Splitter_PointerMoved(winrt::Windows::Foundation::IInspectable const& sender,
+            winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void Splitter_PointerReleased(winrt::Windows::Foundation::IInspectable const& sender,
+            winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+
+        bool m_dragging{ false };
+        bool m_dragVertical{ false };
+        float m_start{ 0 };
+        double m_startSize{ 0 };
+
         MainWindow()
         {
             // Xaml objects should not call InitializeComponent during construction.

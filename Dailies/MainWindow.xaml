@@ -10,6 +10,53 @@
     Title="Dailies">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition x:Name="TopRow" Height="2*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition x:Name="BottomRow" Height="*"/>
+        </Grid.RowDefinitions>
 
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftCol" Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="RightCol" Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" Padding="12">
+                <TextBlock Text="Top left"/>
+            </Border>
+
+            <Border x:Name="VerticalSplitter"
+                Grid.Column="1"
+                Width="6"
+                Background="{ThemeResource DividerStrokeColorDefaultBrush}"
+                PointerPressed="Splitter_PointerPressed"
+                PointerMoved="Splitter_PointerMoved"
+                PointerReleased="Splitter_PointerReleased"
+                PointerCaptureLost="Splitter_PointerReleased"/>
+
+            <Border Grid.Column="2"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                Padding="12">
+                <TextBlock Text="Top right"/>
+            </Border>
+        </Grid>
+
+        <Border x:Name="HorizontalSplitter"
+            Grid.Row="1"
+            Height="6"
+            Background="{ThemeResource DividerStrokeColorDefaultBrush}"
+            PointerPressed="Splitter_PointerPressed"
+            PointerMoved="Splitter_PointerMoved"
+            PointerReleased="Splitter_PointerReleased"
+            PointerCaptureLost="Splitter_PointerReleased"/>
+
+        <Border Grid.Row="2"
+            Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+            Padding="12">
+            <TextBlock Text="Bottom"/>
+        </Border>
     </Grid>
+    
 </Window>
