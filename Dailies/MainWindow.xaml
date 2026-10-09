@@ -24,7 +24,12 @@
             </Grid.ColumnDefinitions>
 
             <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}" Padding="12">
-                <TextBlock Text="Top left"/>
+                <StackPanel Spacing="12">
+                    <TextBlock Text="Recurring"/>
+                    <Button x:Name="AddRecurringTaskButton" 
+                        Content="Add Recuring Task" 
+                        Click="AddRecurringTaskButton_Click"/>
+                </StackPanel>
             </Border>
 
             <Border x:Name="VerticalSplitter"
@@ -39,7 +44,7 @@
             <Border Grid.Column="2"
                 Background="{ThemeResource LayerFillColorDefaultBrush}"
                 Padding="12">
-                <TextBlock Text="Top right"/>
+                <TextBlock Text="One-Time"/>
             </Border>
         </Grid>
 
@@ -55,7 +60,9 @@
         <Border Grid.Row="2"
             Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
             Padding="12">
-            <TextBlock Text="Bottom"/>
+            <StackPanel Spacing="12">
+                <TextBlock Text="Today's Tasks"/>
+            </StackPanel>
         </Border>
     </Grid>
     
