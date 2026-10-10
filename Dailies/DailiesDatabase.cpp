@@ -15,9 +15,14 @@ void DailiesDatabase::Migrate(SQLite::Database& db)
         if (version < 1)
         {
             db.exec(R"(
-                CREATE TABLE IF NOT EXISTS Project (
+                CREATE TABLE IF NOT EXISTS Day (
+                    Id INTEGER PRIMARY KEY
+                );
+
+                CREATE TABLE IF NOT EXISTS Tasks (
                     Id INTEGER PRIMARY KEY,
                     Task TEXT NOT NULL,
+                    Done TEXT NULL,
                     CreatedUtc TEXT NOT NULL
                 );
             )");
