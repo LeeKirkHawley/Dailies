@@ -5,5 +5,6 @@ namespace Dailies
     {
         MainWindow();
         Int32 MyProperty;
+        void Initialize();
     }
 }

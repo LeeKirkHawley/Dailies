@@ -12,6 +12,10 @@ namespace winrt::Dailies::implementation
             winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e);
         void Splitter_PointerReleased(winrt::Windows::Foundation::IInspectable const& sender,
             winrt::Microsoft::UI::Xaml::Input::PointerRoutedEventArgs const& e);
+        void AddRecurringTaskButton_Click(winrt::Windows::Foundation::IInspectable const& sender,
+            winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
+        void AddTaskButton_Click(winrt::Windows::Foundation::IInspectable const& sender,
+            winrt::Microsoft::UI::Xaml::RoutedEventArgs const& e);
 
         bool m_dragging{ false };
         bool m_dragVertical{ false };
@@ -26,6 +30,7 @@ namespace winrt::Dailies::implementation
 
         int32_t MyProperty();
         void MyProperty(int32_t value);
+        void Initialize();
     };
 }
 

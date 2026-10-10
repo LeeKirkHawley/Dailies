@@ -5,6 +5,8 @@
 #endif
 
 #include <algorithm>
+#include <SqliteCpp/SQLiteCpp.h>
+#include "DailiesDatabase.h"
 
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
@@ -14,6 +16,15 @@ using namespace Microsoft::UI::Xaml;
 
 namespace winrt::Dailies::implementation
 {
+    DailiesDatabase m_database;
+    
+
+    void MainWindow::Initialize()
+    {
+        auto db = m_database.OpenAppDatabase("C:\\temp\\Dailies.db");
+        m_database.Migrate(db);
+    }
+
     int32_t MainWindow::MyProperty()
     {
         throw hresult_not_implemented();
@@ -72,5 +83,14 @@ namespace winrt::Dailies::implementation
         sender.as<winrt::Microsoft::UI::Xaml::UIElement>().ReleasePointerCapture(e.Pointer());
         m_dragging = false;
         e.Handled(true);
+    }
+
+    void MainWindow::AddRecurringTaskButton_Click(
+        winrt::Windows::Foundation::IInspectable const& /* sender */,
+        winrt::Microsoft::UI::Xaml::RoutedEventArgs const& /* e */)
+    {
+        // TODO: Implement add task logic
+
+        const char* version = SQLite::getLibVersion();
     }
 }

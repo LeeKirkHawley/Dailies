@@ -38,6 +38,7 @@ namespace winrt::Dailies::implementation
     void App::OnLaunched([[maybe_unused]] LaunchActivatedEventArgs const& e)
     {
         window = make<MainWindow>();
+        window.as<winrt::Dailies::MainWindow>().Initialize();
         window.Activate();
     }
 }
