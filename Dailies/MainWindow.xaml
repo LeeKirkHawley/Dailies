@@ -27,7 +27,7 @@
                 <StackPanel Spacing="12">
                     <TextBlock Text="Recurring"/>
                     <Button x:Name="AddRecurringTaskButton" 
-                        Content="Add Recuring Task" 
+                        Content="Add Recurring Task" 
                         Click="AddRecurringTaskButton_Click"/>
                 </StackPanel>
             </Border>

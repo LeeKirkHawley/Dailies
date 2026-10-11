@@ -8,6 +8,9 @@
 #include <SqliteCpp/SQLiteCpp.h>
 #include "DailiesDatabase.h"
 
+#include "Day.h"
+
+
 using namespace winrt;
 using namespace Microsoft::UI::Xaml;
 
@@ -16,12 +19,13 @@ using namespace Microsoft::UI::Xaml;
 
 namespace winrt::Dailies::implementation
 {
-    DailiesDatabase m_database;
+    DailiesDatabase m_dbManager;
+    SQLite::Database m_database = m_dbManager.OpenAppDatabase("C:\\temp\\Dailies.db");
     
 
     void MainWindow::Initialize()
     {
-        auto db = m_database.OpenAppDatabase("C:\\temp\\Dailies.db");
+        m_dbManager.Migrate(m_database);
     }
 
     int32_t MainWindow::MyProperty()
@@ -88,8 +92,21 @@ namespace winrt::Dailies::implementation
         winrt::Windows::Foundation::IInspectable const& /* sender */,
         winrt::Microsoft::UI::Xaml::RoutedEventArgs const& /* e */)
     {
-        // TODO: Implement add task logic
+        Day newDay;
+        newDay.date = "2024-06-11"; // Example date, replace with actual value
+        m_dbManager.insertDay(m_database, newDay);
 
-        const char* version = SQLite::getLibVersion();
+        Day day = m_dbManager.findDayByDateString(m_database, "2024-06-11");  
+
+        Task newTask;
+        newTask.dayId = day.id;
+        newTask.taskName = "New Recurring Task";
+        newTask.isDone = "false";
+        newTask.createdUtc = "2024-06-11T12:00:00Z"; // Example timestamp, replace with actual value
+        newTask.type = "Recurring";
+
+
+        m_dbManager.insertTask(m_database, day, newTask);
     }
 }
+    
