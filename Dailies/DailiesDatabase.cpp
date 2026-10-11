@@ -12,17 +12,25 @@ void DailiesDatabase::Migrate(SQLite::Database& db)
         SQLite::Transaction tx(db);
         int version = db.execAndGet("PRAGMA user_version").getInt();
 
-        //if (version < 1)
-        //{
-        //    db.exec(R"(
-        //        CREATE TABLE IF NOT EXISTS Project (
-        //            Id INTEGER PRIMARY KEY,
-        //            Name TEXT NOT NULL,
-        //            CreatedUtc TEXT NOT NULL
-        //        );
-        //    )");
-        //    version = 1;
-        //}
+        if (version < 1)
+        {
+            db.exec(R"(
+                CREATE TABLE IF NOT EXISTS Day (
+                    Id INTEGER PRIMARY KEY,
+                    Date TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS Tasks (
+                    Id INTEGER PRIMARY KEY,
+                    Day INTEGER NOT NULL REFERENCES Day(Id),
+                    TaskName TEXT NOT NULL,
+                    IsDone TEXT NULL,
+                    CreatedUtc TEXT NOT NULL,
+                    Type TEXT NOT NULL
+                );
+            )");
+            version = 1;
+        }
 
         //if (version < 2)
         //{
@@ -43,7 +51,7 @@ void DailiesDatabase::Migrate(SQLite::Database& db)
         //    version = 3;
         //}
 
-        //db.exec("PRAGMA user_version = " + std::to_string(version));
+        db.exec("PRAGMA user_version = " + std::to_string(version));
         tx.commit();
     }
     catch (const std::exception& ex)

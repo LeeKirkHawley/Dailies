@@ -22,7 +22,6 @@ namespace winrt::Dailies::implementation
     void MainWindow::Initialize()
     {
         auto db = m_database.OpenAppDatabase("C:\\temp\\Dailies.db");
-        m_database.Migrate(db);
     }
 
     int32_t MainWindow::MyProperty()
